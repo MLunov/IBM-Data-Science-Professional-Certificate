@@ -1,5 +1,5 @@
 # IBM Data Science Professional Certificate
-![screenshot of sample](https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/d9/0d7c51354a48d2af08be185b6dcbc2/IBM-Logo-White.png?auto=format%2Ccompress&dpr=2.625&h=70)
+![screenshot of sample](https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/d9/0d7c51354a48d2af08be185b6dcbc2/IBM-Logo-White.png)
 This repository contains materials and solutions for [IBM Data Science Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-science) Specialization, created by International Business Machines Corporation (IBM) - American multinational information technology company.
 *** 
 **Please make homeworks by your own and look in this repository only when you've already done the assignments. Anyway, it is in your interests if you really want to learn something**.
