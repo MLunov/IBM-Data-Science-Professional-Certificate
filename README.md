@@ -1,5 +1,5 @@
 # IBM Data Science Professional Certificate
-![screenshot of sample](https://cognitiveclass.ai/wp-content/uploads/2018/08/Data-Science-Professional-Certificate-350x262-c-default.png)
+![screenshot of sample](https://i.ytimg.com/vi/zgz1B_ozzlA/maxresdefault.jpg)
 This repository contains materials and solutions for [IBM Data Science Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-science) Specialization, created by International Business Machines Corporation (IBM) - American multinational information technology company.
 *** 
 **Please make homeworks by your own and look in this repository only when you've already done the assignments. Anyway, it is in your interests if you really want to learn something**.
