@@ -1,0 +1,308 @@
+Database          : BLUDB              
+Instance          : db2inst1           
+Host name         : 10.112.190.73      
+Authorization Id  : hzv87509           
+Run method        : JDBC               
+Date              : 2019/10/11 19:45:36
+Run time (seconds): completed          
+
+select * from employees
+
+select * from departments
+
+select * from employees
+	where salary < (select avg(salary) from employees)
+
+select EMP_ID, salary,  (select avg(salary) from employees) as avg_salary 
+	from employees
+
+select * from 
+	(select EMP_ID, F_NAME, L_NAME, DEP_ID from employees) as EMP4ALL
+
+select * from employees
+	where dep_id in 
+		(select dept_id_dep from departments)
+
+select * from employees
+	where dep_id in 
+		(select dept_id_dep from departments
+			where loc_id = 'L0002')
+
+select dept_id_dep, DEP_NAME from departments
+	where dept_id_dep in 
+		(select dep_id from employees
+			where salary > 70000)
+
+select * from employees, departments
+
+select * from employees e, departments d
+	where e.dep_id = d.dept_id_dep
+
+-- that's wrong? :
+select EMP_ID, DEP_NAME
+	from employees e, departments d
+		where e.dep_id = d.dept_id_dep
+
+-- no it works okay, like that:
+
+select e.EMP_ID, d.DEP_NAME
+	from employees e, departments d
+		where e.dep_id = d.dept_id_dep
+
+
+
+=======================================================================================
+select * from employees
+
+Run time (seconds): 0.006    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY    MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- --------- ---------- ---------
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2        
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5        
+
+
+=======================================================================================
+select * from departments
+
+Run time (seconds): 0.005    
+Status            : succeeded
+
+DEPT_ID_DEP DEP_NAME        MANAGER_ID LOC_ID   
+----------- --------------- ---------- ---------
+2           Architect Group 30001      L0001    
+5           Software Group  30002      L0002    
+7           Design Team     30003      L0003    
+
+
+=======================================================================================
+select * from employees
+	where salary < (select avg(salary) from employees)
+
+Run time (seconds): 0.006    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500       70000.00 30001      2        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650       65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660       65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234       70000.00 30003      7        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+select EMP_ID, salary,  (select avg(salary) from employees) as avg_salary 
+	from employees
+
+Run time (seconds): 0.005    
+Status            : succeeded
+
+EMP_ID    SALARY    AVG_SALARY                   
+--------- --------- -----------------------------
+E1001     100000.00 72000.00000000000000000000000
+E1002      80000.00 72000.00000000000000000000000
+E1003      50000.00 72000.00000000000000000000000
+E1004      60000.00 72000.00000000000000000000000
+E1005      70000.00 72000.00000000000000000000000
+E1006      90000.00 72000.00000000000000000000000
+E1007      65000.00 72000.00000000000000000000000
+E1008      65000.00 72000.00000000000000000000000
+E1009      70000.00 72000.00000000000000000000000
+E1010      70000.00 72000.00000000000000000000000
+
+
+=======================================================================================
+select * from 
+	(select EMP_ID, F_NAME, L_NAME, DEP_ID from employees) as EMP4ALL
+
+Run time (seconds): 0.005    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  DEP_ID   
+--------- ------- ------- ---------
+E1001     John    Thomas  2        
+E1002     Alice   James   5        
+E1003     Steve   Wells   5        
+E1004     Santosh Kumar   5        
+E1005     Ahmed   Hussain 2        
+E1006     Nancy   Allen   2        
+E1007     Mary    Thomas  7        
+E1008     Bharath Gupta   7        
+E1009     Andrea  Jones   7        
+E1010     Ann     Jacob   5        
+
+
+=======================================================================================
+select * from employees
+	where dep_id in 
+		(select dept_id_dep from departments)
+
+Run time (seconds): 0.009    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY    MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- --------- ---------- ---------
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2        
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5        
+
+
+=======================================================================================
+select * from employees
+	where dep_id in 
+		(select dept_id_dep from departments
+			where loc_id = 'L0002')
+
+Run time (seconds): 0.009    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------ --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1002     Alice   James  123457    1972-07-31 F   980 Berry ln, Elgin,IL       200       80000.00 30002      5        
+E1003     Steve   Wells  123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar  123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1010     Ann     Jacob  123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+select dept_id_dep, DEP_NAME from departments
+	where dept_id_dep in 
+		(select dep_id from employees
+			where salary > 70000)
+
+Run time (seconds): 0.005    
+Status            : succeeded
+
+DEPT_ID_DEP DEP_NAME       
+----------- ---------------
+2           Architect Group
+5           Software Group 
+
+
+=======================================================================================
+select * from employees, departments
+
+Run time (seconds): 0.005    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY    MANAGER_ID DEP_ID    DEPT_ID_DEP DEP_NAME        MANAGER_ID LOC_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- --------- ---------- --------- ----------- --------------- ---------- ---------
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2         2           Architect Group 30001      L0001    
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5         2           Architect Group 30001      L0001    
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5         2           Architect Group 30001      L0001    
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5         2           Architect Group 30001      L0001    
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2         2           Architect Group 30001      L0001    
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2         2           Architect Group 30001      L0001    
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7         2           Architect Group 30001      L0001    
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7         2           Architect Group 30001      L0001    
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7         2           Architect Group 30001      L0001    
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5         2           Architect Group 30001      L0001    
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2         5           Software Group  30002      L0002    
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5         5           Software Group  30002      L0002    
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5         5           Software Group  30002      L0002    
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5         5           Software Group  30002      L0002    
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2         5           Software Group  30002      L0002    
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2         5           Software Group  30002      L0002    
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7         5           Software Group  30002      L0002    
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7         5           Software Group  30002      L0002    
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7         5           Software Group  30002      L0002    
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5         5           Software Group  30002      L0002    
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2         7           Design Team     30003      L0003    
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5         7           Design Team     30003      L0003    
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5         7           Design Team     30003      L0003    
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5         7           Design Team     30003      L0003    
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2         7           Design Team     30003      L0003    
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2         7           Design Team     30003      L0003    
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7         7           Design Team     30003      L0003    
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7         7           Design Team     30003      L0003    
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7         7           Design Team     30003      L0003    
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5         7           Design Team     30003      L0003    
+
+
+=======================================================================================
+select * from employees e, departments d
+	where e.dep_id = d.dept_id_dep
+
+Run time (seconds): 0.010    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY    MANAGER_ID DEP_ID    DEPT_ID_DEP DEP_NAME        MANAGER_ID LOC_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- --------- ---------- --------- ----------- --------------- ---------- ---------
+E1001     John    Thomas  123456    1976-01-09 M   5631 Rice, OakPark,IL        100       100000.00 30001      2         2           Architect Group 30001      L0001    
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200        80000.00 30002      5         5           Software Group  30002      L0002    
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300        50000.00 30002      5         5           Software Group  30002      L0002    
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400        60000.00 30004      5         5           Software Group  30002      L0002    
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500        70000.00 30001      2         2           Architect Group 30001      L0001    
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600        90000.00 30001      2         2           Architect Group 30001      L0001    
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650        65000.00 30003      7         7           Design Team     30003      L0003    
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660        65000.00 30003      7         7           Design Team     30003      L0003    
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234        70000.00 30003      7         7           Design Team     30003      L0003    
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220        70000.00 30004      5         5           Software Group  30002      L0002    
+
+
+=======================================================================================
+-- that's wrong? :
+select EMP_ID, DEP_NAME
+	from employees e, departments d
+		where e.dep_id = d.dept_id_dep
+
+Run time (seconds): 0.019    
+Status            : succeeded
+
+EMP_ID    DEP_NAME       
+--------- ---------------
+E1001     Architect Group
+E1002     Software Group 
+E1003     Software Group 
+E1004     Software Group 
+E1005     Architect Group
+E1006     Architect Group
+E1007     Design Team    
+E1008     Design Team    
+E1009     Design Team    
+E1010     Software Group 
+
+
+=======================================================================================
+-- no it works okay, like that:
+
+select e.EMP_ID, d.DEP_NAME
+	from employees e, departments d
+		where e.dep_id = d.dept_id_dep
+
+Run time (seconds): 0.019    
+Status            : succeeded
+
+EMP_ID    DEP_NAME       
+--------- ---------------
+E1001     Architect Group
+E1002     Software Group 
+E1003     Software Group 
+E1004     Software Group 
+E1005     Architect Group
+E1006     Architect Group
+E1007     Design Team    
+E1008     Design Team    
+E1009     Design Team    
+E1010     Software Group 
+
+
