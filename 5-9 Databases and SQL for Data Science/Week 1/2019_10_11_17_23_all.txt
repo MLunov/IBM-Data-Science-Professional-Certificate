@@ -1,0 +1,133 @@
+Database          : BLUDB              
+Instance          : db2inst1           
+Host name         : 10.112.190.73      
+Authorization Id  : hzv87509           
+Run method        : JDBC               
+Date              : 2019/10/11 17:23:52
+Run time (seconds): completed          
+
+drop table INSTRUCTOR
+
+create table INSTRUCTOR (
+    ins_id integer PRIMARY KEY NOT NULL,
+    lastname varchar(15),
+    firstname varchar(15),
+    city varchar(15),
+    country char(2)
+    )
+
+insert into INSTRUCTOR
+(ins_id, lastname, firstname, city, country)
+values
+(1, 'Ahuja', 'Rav', 'Toronto', 'CA')
+
+insert into INSTRUCTOR
+-- (ins_id, lastname, firstname, city, country)
+values
+(2, 'Chong', 'Raul', 'Toronto', 'CA') ,
+(3, 'Vasudevan', 'Hima', 'Chicago', 'US')
+
+select * from INSTRUCTOR
+
+select firstname, lastname, country from INSTRUCTOR where city = 'Toronto'
+
+update INSTRUCTOR
+set city = 'Markham'
+where ins_id = 1
+
+delete from INSTRUCTOR
+where ins_id = 2
+
+select * from INSTRUCTOR
+
+
+
+=======================================================================================
+drop table INSTRUCTOR
+
+Run time (seconds): 0.066    
+Status            : succeeded
+
+=======================================================================================
+create table INSTRUCTOR (
+    ins_id integer PRIMARY KEY NOT NULL,
+    lastname varchar(15),
+    firstname varchar(15),
+    city varchar(15),
+    country char(2)
+    )
+
+Run time (seconds): 0.185    
+Status            : succeeded
+
+=======================================================================================
+insert into INSTRUCTOR
+(ins_id, lastname, firstname, city, country)
+values
+(1, 'Ahuja', 'Rav', 'Toronto', 'CA')
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+=======================================================================================
+insert into INSTRUCTOR
+-- (ins_id, lastname, firstname, city, country)
+values
+(2, 'Chong', 'Raul', 'Toronto', 'CA') ,
+(3, 'Vasudevan', 'Hima', 'Chicago', 'US')
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+select * from INSTRUCTOR
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+INS_ID LASTNAME  FIRSTNAME CITY    COUNTRY
+------ --------- --------- ------- -------
+     1 Ahuja     Rav       Toronto CA     
+     2 Chong     Raul      Toronto CA     
+     3 Vasudevan Hima      Chicago US     
+
+
+=======================================================================================
+select firstname, lastname, country from INSTRUCTOR where city = 'Toronto'
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+FIRSTNAME LASTNAME COUNTRY
+--------- -------- -------
+Rav       Ahuja    CA     
+Raul      Chong    CA     
+
+
+=======================================================================================
+update INSTRUCTOR
+set city = 'Markham'
+where ins_id = 1
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+=======================================================================================
+delete from INSTRUCTOR
+where ins_id = 2
+
+Run time (seconds): 0.011    
+Status            : succeeded
+
+=======================================================================================
+select * from INSTRUCTOR
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+INS_ID LASTNAME  FIRSTNAME CITY    COUNTRY
+------ --------- --------- ------- -------
+     1 Ahuja     Rav       Markham CA     
+     3 Vasudevan Hima      Chicago US     
+
+
