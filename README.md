@@ -12,6 +12,6 @@ Specialization consists of 9 courses:
 5. [Databases and SQL for Data Science](https://github.com/MLunov/IBM-Data-Science-Professional-Certificate/tree/master/5-9%20Databases%20and%20SQL%20for%20Data%20Science)
 6. [Data Analysis with Python](https://github.com/MLunov/IBM-Data-Science-Professional-Certificate/tree/master/6-9%20Data%20Analysis%20with%20Python)
 7. [Data Visualization with Python](https://github.com/MLunov/IBM-Data-Science-Professional-Certificate/tree/master/7-9%20Data%20Visualization%20with%20Python)
-8. [Machine Learning with Python]()
-9. [Applied Data Science Capstone]()
+8. Machine Learning with Python[]()
+9. Applied Data Science Capstone[]()
 
